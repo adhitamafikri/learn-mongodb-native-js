@@ -15,9 +15,9 @@ const mongo = MongoDBUtil()
 const mongoConnection = mongo.connect()
 
 mongoConnection
-  .then(cl => {
+  .then(client => {
     // Routes
-    app.use('/mongojs/v1', RouterStack(router, cl))
+    app.use('/mongojs/v1', RouterStack(router, client))
   })
   .catch(err => {
     throw err
