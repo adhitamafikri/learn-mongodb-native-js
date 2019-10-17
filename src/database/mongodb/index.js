@@ -8,13 +8,7 @@ export default function MongoDB() {
       console.log('connecting to mongoDB', DB_URI)
       const client = new MongoClient(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
-      try {
-        await client.connect()
-        return client
-      } catch(err) {
-        console.log(err)
-        throw err
-      }
+      return await client.connect()
     },
 
     disconnect: async function(client) {
