@@ -1,15 +1,18 @@
 import ShoppingItemRepository from '../repositories/ShoppingItemRepository'
 
-export default function ShoppingItemService() {
-  const repository = ShoppingItemRepository()
+/**
+ * @param {mongodb.collection} collection
+ */
+export default function ShoppingItemService(collection) {
+  const repository = ShoppingItemRepository(collection)
 
   return {
-    getShoppingItems: async function(collection, queryLimit) {
-      const result = await repository.getShoppingItems(collection, queryLimit)
+    getShoppingItems: async function(queryLimit) {
+      const result = await repository.getShoppingItems(queryLimit)
       return result
     },
-    addShoppingItems: async function(collection, items) {
-      const result = await repository.addShoppingItems(collection, items)
+    addShoppingItems: async function(items) {
+      const result = await repository.addShoppingItems(items)
       return result
     }
   }

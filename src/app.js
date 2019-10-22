@@ -1,5 +1,4 @@
 import express from 'express'
-import bodyParser from 'body-parser'
 import 'dotenv/config'
 
 import MongoDBUtil from './database/mongodb'
@@ -8,7 +7,8 @@ import RouterStack from './routes'
 const app = express()
 const router = express.Router()
 
-app.use(bodyParser.json())
+// Middlewares
+app.use(express.json())
 
 // Connect to DB
 const mongo = MongoDBUtil()

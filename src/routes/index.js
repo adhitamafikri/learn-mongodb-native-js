@@ -11,7 +11,7 @@ export default function RouterStack(router, client) {
   const db = client.db('mern-shopping')
 
   const routes = [
-    // AuthRoutes(router, db),
+    AuthRoutes(router, db),
     HomeRoutes(router),
     ShoppingItemRoutes(router, db)
   ]

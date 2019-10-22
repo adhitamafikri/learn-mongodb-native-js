@@ -1,11 +1,15 @@
 import ShoppingItemService from '../services/ShoppingItemService'
 
+/**
+ * @param {express.Router} router
+ * @param {mongodb.db} db
+ */
 export default function ShoppingItemRoutes(router, db) {
   const collection = db.collection('items')
-  const service = ShoppingItemService()
+  const service = ShoppingItemService(collection)
 
   router.get('/shopping-items', async (req, res, next) => {
-    const result = await service.getShoppingItems(collection)
+    const result = await service.getShoppingItems()
 
     res.status(200).json({
       message: 'Success retrieved shopping items',
@@ -15,7 +19,7 @@ export default function ShoppingItemRoutes(router, db) {
 
   router.post('/shopping-items', async (req, res, next) => {
     const items = req.body.items
-    const result = await service.addShoppingItems(collection, items)
+    const result = await service.addShoppingItems(items)
 
     res.status(200).json({
       message: 'Success adding shopping items',

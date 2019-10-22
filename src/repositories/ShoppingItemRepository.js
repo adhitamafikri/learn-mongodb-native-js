@@ -1,6 +1,9 @@
-export default function ShoppingItemRepository() {
+/**
+ * @param {mongodb.collection} collection
+ */
+export default function ShoppingItemRepository(collection) {
   return {
-    getShoppingItems: async function(collection, queryLimit) {
+    getShoppingItems: async function(queryLimit) {
       if (queryLimit) {
         try {
           const result = await collection.find().limit(queryLimit).toArray()
@@ -18,7 +21,7 @@ export default function ShoppingItemRepository() {
       }
     },
 
-    addShoppingItems: async function(collection, items) {
+    addShoppingItems: async function(items) {
       if (items) {
         try {
           const result = await collection.insertMany(items)

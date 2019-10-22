@@ -1,11 +1,14 @@
 import AuthRepository from '../repositories/AuthRepository'
 
-export default function AuthService() {
-  const repository = AuthRepository()
+/**
+ * @param {mongodb.collection} collection
+ */
+export default function AuthService(collection) {
+  const repository = AuthRepository(collection)
 
   return {
-    register: function() {
-      const result = repository.register()
+    register: async function(user) {
+      const result = await repository.register(user)
       return result
     },
 
