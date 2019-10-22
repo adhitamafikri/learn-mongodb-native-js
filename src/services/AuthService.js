@@ -12,8 +12,8 @@ export default function AuthService(collection) {
       return result
     },
 
-    login: function() {
-      const result = repository.login()
+    login: async function(loginData) {
+      const result = await repository.login(loginData)
       return result
     }
   }

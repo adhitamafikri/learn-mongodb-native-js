@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import 'dotenv/config'
 
 import MongoDBUtil from './database/mongodb'
@@ -8,6 +9,7 @@ const app = express()
 const router = express.Router()
 
 // Middlewares
+app.use(cors())
 app.use(express.json())
 
 // Connect to DB
