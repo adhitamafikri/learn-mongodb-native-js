@@ -13,20 +13,23 @@ export default function AuthRoutes(router, db) {
     }
 
     if (newUser.name && newUser.email && newUser.password) {
-      const {error, result} = await service.register(newUser)
+      const { message, error, result } = await service.register(newUser)
       if (error) {
         res.status(400).json({
-          message: error,
+          message: message,
+          error: error,
           result: null
         })
       }
       res.status(200).json({
-        message: 'Success registering new user!',
+        message: message,
+        error: error,
         result: result
       })
     } else {
       res.status(400).json({
         message: 'Data is not complete!',
+        error: true,
         result: null
       })
     }
@@ -40,20 +43,23 @@ export default function AuthRoutes(router, db) {
     }
 
     if (loginData.email && loginData.password) {
-      const { error, result } = await service.login(loginData)
+      const { message, error, result } = await service.login(loginData)
       if (error) {
         res.status(400).json({
-          message: error,
+          message: message,
+          error: error,
           result: null
         })
       }
       res.status(200).json({
-        message: 'Success logged in',
+        message: message,
+        error: error,
         result: result
       })
     } else {
       res.status(400).json({
         message: 'Data is not complete!',
+        error: true,
         result: null
       })
     }
