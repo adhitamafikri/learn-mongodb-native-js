@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import AuthService from '../services/AuthService'
 
 export default function AuthRoutes(router, db) {
@@ -22,7 +23,7 @@ export default function AuthRoutes(router, db) {
       res.status(400).json({
         message: 'Data is not complete!',
         error: true,
-        result: null
+        data: null
       })
     }
   })
@@ -39,12 +40,16 @@ export default function AuthRoutes(router, db) {
       if (result.error) {
         res.status(400).json({ ...result })
       }
-      res.status(200).json({ ...result })
+
+      // Create and assign a token
+      const token = jwt.sign({ _id: result.data._id }, process.env.TOKEN_KEY)
+
+      res.header('x-access-token', token).status(200).json({ ...result })
     } else {
       res.status(400).json({
         message: 'Data is not complete!',
         error: true,
-        result: null
+        data: null
       })
     }
   })

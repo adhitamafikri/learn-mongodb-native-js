@@ -1,17 +1,17 @@
 /**
  * @param {String | Object} message
  * @param {Boolean} error
- * @param {Object} result
+ * @param {Object} data
  * @return {Object}
  */
 export default function ResponseObject(
   message,
   error,
-  result
+  data
 ) {
   return {
     message,
     error,
-    result
+    data
   }
 }

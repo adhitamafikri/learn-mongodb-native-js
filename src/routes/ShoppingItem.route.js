@@ -1,3 +1,4 @@
+import AuthMiddleware from '../middlewares/auth'
 import ShoppingItemService from '../services/ShoppingItemService'
 
 /**
@@ -8,7 +9,8 @@ export default function ShoppingItemRoutes(router, db) {
   const collection = db.collection('items')
   const service = ShoppingItemService(collection)
 
-  router.get('/shopping-items', async (req, res, next) => {
+  // GET:shopping-items
+  router.get('/shopping-items', AuthMiddleware, async (req, res, next) => {
     const result = await service.getShoppingItems()
     if (result.error) {
       res.status(400).json({ ...result })
@@ -16,6 +18,7 @@ export default function ShoppingItemRoutes(router, db) {
     res.status(200).json({ ...result })
   })
 
+  // POST:shopping-items
   router.post('/shopping-items', async (req, res, next) => {
     const items = req.body.items
 
@@ -30,7 +33,7 @@ export default function ShoppingItemRoutes(router, db) {
     res.status(400).json({
       message: 'Item is incomplete',
       error: true,
-      result: null
+      data: null
     })
   })
 
