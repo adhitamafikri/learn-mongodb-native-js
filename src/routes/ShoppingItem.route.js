@@ -10,21 +10,27 @@ export default function ShoppingItemRoutes(router, db) {
 
   router.get('/shopping-items', async (req, res, next) => {
     const result = await service.getShoppingItems()
-
-    res.status(200).json({
-      message: 'Success retrieved shopping items',
-      result: result
-    })
+    if (result.error) {
+      res.status(400).json({ ...result })
+    }
+    res.status(200).json({ ...result })
   })
 
   router.post('/shopping-items', async (req, res, next) => {
     const items = req.body.items
-    const result = await service.addShoppingItems(items)
 
-    res.status(200).json({
-      message: 'Success adding shopping items',
-      items: items,
-      result: result
+    if (items) {
+      const result = await service.addShoppingItems(items)
+
+      if (result.error) {
+        res.status(400).json({ ...result })
+      }
+      res.status(200).json({ ...result })
+    }
+    res.status(400).json({
+      message: 'Item is incomplete',
+      error: true,
+      result: null
     })
   })
 

@@ -15,17 +15,9 @@ export default function AuthRepository(collection) {
           password: hashedPassword,
           date: new Date().toISOString()
         })
-        return {
-          message: 'Success Registering new user!',
-          error: null,
-          result: result.ops
-        }
+        return objects.ResponseObject('Success Registering new user!', false, result.ops)
       } catch (error) {
-        return {
-          message: 'Something went wrong when registering new user',
-          error: error,
-          result: null
-        }
+        return objects.ResponseObject('Something went wrong when registering new user', true, null)
       }
     },
 
@@ -33,23 +25,19 @@ export default function AuthRepository(collection) {
       let user = null
       try {
         user = await collection.findOne({ email: loginData.email })
-        if (!user) {
-          return objects.ResponseObject('Email does not exist', true, null)
-        }
+        if (!user) return objects.ResponseObject('Email does not exist', true, null)
       } catch (error) {
         return objects.ResponseObject(error, true, null)
       }
 
       try {
         const validPassword = await bcrypt.compare(loginData.password, user.password)
-        if (!validPassword) {
-          return objects.ResponseObject('Wrong Password!', true, null)
-        }
+        if (!validPassword) return objects.ResponseObject('Wrong Password!', true, null)
       } catch (error) {
         return objects.ResponseObject(error, true, null)
       }
 
-      return objects.ResponseObject('Success Logging In!', null, user)
+      return objects.ResponseObject('Success Logging In!', false, user)
     }
   }
 }

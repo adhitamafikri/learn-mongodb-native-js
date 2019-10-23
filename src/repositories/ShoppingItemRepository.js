@@ -1,3 +1,5 @@
+import objects from '../objects'
+
 /**
  * @param {mongodb.collection} collection
  */
@@ -7,30 +9,27 @@ export default function ShoppingItemRepository(collection) {
       if (queryLimit) {
         try {
           const result = await collection.find().limit(queryLimit).toArray()
-          return result
+          return objects.ResponseObject('Query Success!', false, result)
         } catch (error) {
-          throw error
+          return objects.ResponseObject('Somwthing went wrong', true, null)
         }
       }
 
       try {
         const result = await collection.find().toArray()
-        return result
+        return objects.ResponseObject('Query Success!', false, result)
       } catch (error) {
-        throw error
+        return objects.ResponseObject('Somwthing went wrong', true, null)
       }
     },
 
     addShoppingItems: async function(items) {
-      if (items) {
-        try {
-          const result = await collection.insertMany(items)
-          return result
-        } catch (error) {
-          throw error
-        }
+      try {
+        const result = await collection.insertMany(items)
+        return objects.ResponseObject('Query Success!', false, result)
+      } catch (error) {
+        return objects.ResponseObject('Somwthing went wrong', true, null)
       }
-      return Error('You dont have any items to add')
     }
   }
 }
